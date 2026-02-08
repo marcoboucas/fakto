@@ -26,8 +26,8 @@ export function AppLayout({ children, userName = "Clarisse Kovalenko", userAvata
 
   const navItems = [
     { icon: Search, label: "Rechercher" },
-    { icon: Home, label: "Accueil", active: true },
-    { icon: BookOpen, label: "Formations" },
+    { icon: Home, label: "Accueil", href: "/app" },
+    { icon: BookOpen, label: "Formations", href: "/app/formations" },
     { icon: Target, label: "Objectifs" },
     { icon: Calendar, label: "Calendrier" },
     { icon: FileText, label: "Documents" },
