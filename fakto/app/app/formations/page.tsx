@@ -3,6 +3,9 @@ import { getFormations } from "@/lib/api/formations";
 import { FormationsList } from "@/components/formations/formations-list";
 import { FormationsLoading } from "@/components/formations/formations-loading";
 
+// Force dynamic rendering for this page
+export const dynamic = 'force-dynamic';
+
 async function FormationsData() {
   const formations = await getFormations();
   return <FormationsList formations={formations} />;

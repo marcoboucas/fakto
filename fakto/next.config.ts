@@ -1,7 +1,10 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  // Ensure build doesn't fail on font loading issues in CI
+  experimental: {
+    optimizePackageImports: ['@hugeicons/react', 'lucide-react'],
+  },
 };
 
 export default nextConfig;

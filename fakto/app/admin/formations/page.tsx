@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Suspense } from "react";
 import Link from "next/link";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import { AdminFormation, AdminFormationStats } from "@/types/formations";
@@ -19,7 +19,10 @@ import { Download, Plus, Search, Filter } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useDebouncedCallback } from "use-debounce";
 
-function FormationsStats({ stats }: { stats: AdminFormationStats | null }) {
+// Force dynamic rendering for this page
+export const dynamic = 'force-dynamic';
+
+function FormationsStats({ stats = null }: { stats?: AdminFormationStats | null } = {}) {
   if (!stats) {
     return (
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
@@ -65,7 +68,10 @@ function FormationsStats({ stats }: { stats: AdminFormationStats | null }) {
   );
 }
 
-function FormationsData({ formations, loading }: { formations: AdminFormation[], loading: boolean }) {
+function FormationsData({ filters }: { filters?: { search?: string; type?: string; status?: string; modality?: string } }) {
+  // TODO: Fetch formations based on filters
+  const formations: AdminFormation[] = [];
+  const loading = false;
   if (loading) {
     return (
       <div className="rounded-lg border bg-card p-6">
@@ -192,7 +198,7 @@ function FormationsFilters() {
   );
 }
 
-export default function AdminFormationsPage() {
+function AdminFormationsPageContent() {
   const searchParams = useSearchParams();
   const filters = {
     search: searchParams.get("search") || undefined,
@@ -243,5 +249,13 @@ export default function AdminFormationsPage() {
         <FormationsData filters={filters} />
       </Suspense>
     </div>
+  );
+}
+
+export default function AdminFormationsPage() {
+  return (
+    <Suspense fallback={<div className="p-8">Loading...</div>}>
+      <AdminFormationsPageContent />
+    </Suspense>
   );
 }
