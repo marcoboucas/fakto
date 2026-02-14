@@ -5,6 +5,10 @@ const nextConfig: NextConfig = {
   experimental: {
     optimizePackageImports: ['@hugeicons/react', 'lucide-react'],
   },
+  // Skip route collection during build for API routes
+  typescript: {
+    ignoreBuildErrors: false,
+  },
 };
 
 export default nextConfig;

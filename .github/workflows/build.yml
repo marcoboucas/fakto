@@ -26,6 +26,12 @@ jobs:
         working-directory: ./fakto
         run: npm ci
       
+      - name: Generate Prisma Client
+        working-directory: ./fakto
+        run: npm run db:generate
+        env:
+          DATABASE_URL: postgresql://user:password@localhost:5432/fakto
+      
       - name: Build application
         working-directory: ./fakto
         run: npm run build
