@@ -26,9 +26,9 @@ export function AdminLayout({ children, userName = "Administrateur", userAvatar,
 
   const navItems = [
     { icon: Search, label: "Rechercher" },
-    { icon: Home, label: "Accueil", active: true },
+    { icon: Home, label: "Accueil", href: "/admin" },
     { icon: Users, label: "Utilisateurs" },
-    { icon: BookOpen, label: "Formations" },
+    { icon: BookOpen, label: "Formations", href: "/admin/formations" },
     { icon: BarChart3, label: "Statistiques" },
     { icon: FileText, label: "Documents" },
   ];

@@ -1,0 +1,194 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ========================================
+// Formation Model
+// ========================================
+
+model Formation {
+  id           String   @id @default(cuid())
+  name         String
+  subtitle     String?
+  type         String   // "Catalogue" | "Sur-mesure"
+  modalities   String[] // ["E-learning", "Présentiel", "Distanciel"]
+  status       String   // "Publié" | "Brouillon"
+  description  String?
+  image        String?
+  
+  // User progress tracking
+  progress     Int      @default(0)
+  lastViewed   DateTime?
+  elementsCount Int?
+  
+  // Relationships
+  objectives   FormationObjective[]
+  content      FormationContent[]
+  courses      Course[]
+  qcms         Qcm[]
+  evaluations  Evaluation[]
+  
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@map("formations")
+}
+
+model FormationObjective {
+  id          String    @id @default(cuid())
+  text        String
+  order       Int
+  formationId String
+  formation   Formation @relation(fields: [formationId], references: [id], onDelete: Cascade)
+  
+  createdAt   DateTime  @default(now())
+
+  @@map("formation_objectives")
+}
+
+model FormationContent {
+  id          String    @id @default(cuid())
+  text        String
+  order       Int
+  formationId String
+  formation   Formation @relation(fields: [formationId], references: [id], onDelete: Cascade)
+  
+  createdAt   DateTime  @default(now())
+
+  @@map("formation_content")
+}
+
+// ========================================
+// Course Model
+// ========================================
+
+model Course {
+  id          String    @id @default(cuid())
+  title       String
+  description String
+  videoUrl    String
+  duration    String
+  order       Int
+  formationId String
+  formation   Formation @relation(fields: [formationId], references: [id], onDelete: Cascade)
+  
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@map("courses")
+}
+
+// ========================================
+// QCM (Quiz) Models
+// ========================================
+
+model Qcm {
+  id          String        @id @default(cuid())
+  title       String
+  description String
+  duration    String
+  order       Int
+  formationId String
+  formation   Formation     @relation(fields: [formationId], references: [id], onDelete: Cascade)
+  questions   QcmQuestion[]
+  
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  @@map("qcms")
+}
+
+model QcmQuestion {
+  id      String      @id @default(cuid())
+  text    String
+  order   Int
+  qcmId   String
+  qcm     Qcm         @relation(fields: [qcmId], references: [id], onDelete: Cascade)
+  answers QcmAnswer[]
+  
+  createdAt DateTime  @default(now())
+
+  @@map("qcm_questions")
+}
+
+model QcmAnswer {
+  id               String      @id @default(cuid())
+  text             String
+  isCorrect        Boolean
+  detailedResponse String      // Shown after user selects answer
+  questionId       String
+  question         QcmQuestion @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  
+  createdAt        DateTime    @default(now())
+
+  @@map("qcm_answers")
+}
+
+// ========================================
+// Evaluation Models
+// ========================================
+
+model Evaluation {
+  id                  String                @id @default(cuid())
+  title               String
+  description         String
+  detailedDescription String
+  duration            String
+  order               Int
+  formationId         String
+  formation           Formation             @relation(fields: [formationId], references: [id], onDelete: Cascade)
+  documents           EvaluationDocument[]
+  questions           EvaluationQuestion[]
+  
+  createdAt           DateTime              @default(now())
+  updatedAt           DateTime              @updatedAt
+
+  @@map("evaluations")
+}
+
+model EvaluationDocument {
+  id           String     @id @default(cuid())
+  title        String
+  url          String
+  order        Int
+  evaluationId String
+  evaluation   Evaluation @relation(fields: [evaluationId], references: [id], onDelete: Cascade)
+  
+  createdAt    DateTime   @default(now())
+
+  @@map("evaluation_documents")
+}
+
+model EvaluationQuestion {
+  id           String            @id @default(cuid())
+  text         String
+  order        Int
+  evaluationId String
+  evaluation   Evaluation        @relation(fields: [evaluationId], references: [id], onDelete: Cascade)
+  answers      EvaluationAnswer[]
+  
+  createdAt    DateTime          @default(now())
+
+  @@map("evaluation_questions")
+}
+
+model EvaluationAnswer {
+  id               String             @id @default(cuid())
+  text             String
+  isCorrect        Boolean
+  detailedResponse String
+  questionId       String
+  question         EvaluationQuestion @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  
+  createdAt        DateTime           @default(now())
+
+  @@map("evaluation_answers")
+}
+

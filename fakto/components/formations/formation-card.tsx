@@ -4,16 +4,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-
-export interface Formation {
-  id: string;
-  title: string;
-  image: string;
-  status: "in-progress" | "not-started" | "completed";
-  progress: number;
-  lastViewed?: string;
-  elementsCount?: number;
-}
+import Link from "next/link";
+import { Formation } from "@/types/formations";
 
 interface FormationCardProps {
   formation: Formation;
@@ -55,7 +47,8 @@ export function FormationCard({ formation, className }: FormationCardProps) {
   };
 
   return (
-    <Card className={cn("hover:shadow-md transition-shadow", className)}>
+    <Link href={`/app/formations/${formation.id}`}>
+      <Card className={cn("hover:shadow-md transition-shadow cursor-pointer", className)}>
       <CardContent className="p-6">
         <div className="flex gap-4">
           <div className="relative w-40 h-28 flex-shrink-0">
@@ -140,5 +133,6 @@ export function FormationCard({ formation, className }: FormationCardProps) {
         </div>
       </CardContent>
     </Card>
+    </Link>
   );
 }

@@ -1,6 +1,7 @@
 "use client";
 
-import { FormationCard, Formation } from "@/components/formations/formation-card";
+import { FormationCard } from "@/components/formations/formation-card";
+import { Formation } from "@/types/formations";
 import { useState } from "react";
 
 interface FormationsListProps {
