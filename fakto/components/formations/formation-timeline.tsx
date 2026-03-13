@@ -12,7 +12,7 @@ export function FormationTimeline({ steps }: FormationTimelineProps) {
   // Convert FormationStep to Step format
   const stepperSteps: Step[] = steps.map((step) => {
     const getIcon = () => {
-      if (step.type === "quiz") return Play;
+      if (step.type === "qcm") return Play;
       if (step.type === "evaluation") return Play;
       return Play;
     };

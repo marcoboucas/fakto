@@ -14,7 +14,7 @@ interface FormationCardProps {
 
 export function FormationCard({ formation, className }: FormationCardProps) {
   const getStatusLabel = () => {
-    switch (formation.status) {
+    switch (formation.userStatus) {
       case "in-progress":
         return `En cours (${formation.progress}% vue)`;
       case "completed":
@@ -25,7 +25,7 @@ export function FormationCard({ formation, className }: FormationCardProps) {
   };
 
   const getStatusVariant = () => {
-    switch (formation.status) {
+    switch (formation.userStatus) {
       case "in-progress":
         return "secondary";
       case "completed":
@@ -36,7 +36,7 @@ export function FormationCard({ formation, className }: FormationCardProps) {
   };
 
   const getButtonLabel = () => {
-    switch (formation.status) {
+    switch (formation.userStatus) {
       case "in-progress":
         return "Continuer le cours";
       case "completed":
@@ -57,7 +57,7 @@ export function FormationCard({ formation, className }: FormationCardProps) {
               alt={formation.title}
               className="w-full h-full rounded-lg object-cover"
             />
-            {formation.status === "not-started" && formation.elementsCount && (
+            {formation.userStatus === "not-started" && formation.elementsCount && (
               <div className="absolute inset-0 flex items-center justify-center bg-black/40 rounded-lg">
                 <div className="w-12 h-12 rounded-full bg-white/90 flex items-center justify-center">
                   <svg 
@@ -93,17 +93,17 @@ export function FormationCard({ formation, className }: FormationCardProps) {
             <h3 className="font-semibold mb-2 text-base line-clamp-2">
               {formation.title}
             </h3>
-            {formation.status === "not-started" && formation.elementsCount && (
+            {formation.userStatus === "not-started" && formation.elementsCount && (
               <p className="text-sm text-muted-foreground mb-3">
                 {formation.elementsCount} élément{formation.elementsCount > 1 ? "s" : ""}
               </p>
             )}
-            {formation.status === "in-progress" && (
+            {formation.userStatus === "in-progress" && (
               <Button variant="secondary" size="sm" className="mb-2">
                 {getButtonLabel()}
               </Button>
             )}
-            {(formation.status === "completed" || formation.status === "not-started") && (
+            {(formation.userStatus === "completed" || formation.userStatus === "not-started") && (
               <Button variant="secondary" size="sm" className="mb-2">
                 {getButtonLabel()}
               </Button>
@@ -114,12 +114,12 @@ export function FormationCard({ formation, className }: FormationCardProps) {
             <Badge 
               variant={getStatusVariant()}
               className={cn(
-                formation.status === "completed" && "bg-green-500 text-white hover:bg-green-600"
+                formation.userStatus === "completed" && "bg-green-500 text-white hover:bg-green-600"
               )}
             >
               {getStatusLabel()}
             </Badge>
-            {formation.status === "in-progress" && (
+            {formation.userStatus === "in-progress" && (
               <div className="w-32">
                 <div className="h-1.5 bg-muted rounded-full overflow-hidden">
                   <div 

@@ -12,9 +12,9 @@ export function FormationsList({ formations }: FormationsListProps) {
   const [activeTab, setActiveTab] = useState<"enrolled" | "completed">("enrolled");
 
   const enrolledFormations = formations.filter(
-    (f) => f.status === "in-progress" || f.status === "not-started"
+    (f) => f.userStatus === "in-progress" || f.userStatus === "not-started"
   );
-  const completedFormations = formations.filter((f) => f.status === "completed");
+  const completedFormations = formations.filter((f) => f.userStatus === "completed");
 
   const displayedFormations =
     activeTab === "enrolled" ? enrolledFormations : completedFormations;

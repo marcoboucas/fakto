@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/prisma";
+import { Prisma } from "@prisma/client";
 import {
   AdminFormation,
   AdminFormationStats,
@@ -23,7 +24,7 @@ export async function getAdminFormations(filters: {
   modality?: string;
 } = {}): Promise<AdminFormation[]> {
   const { search, type, status, modality } = filters;
-  const where: any = {};
+  const where: Prisma.FormationWhereInput = {};
 
   if (search) {
     where.OR = [
@@ -153,7 +154,6 @@ export async function getAdminFormationById(
     image: formation.image || undefined,
     createdAt: formation.createdAt.toISOString(),
     updatedAt: formation.updatedAt.toISOString(),
-    lastModified: formation.updatedAt.toLocaleDateString("fr-FR"),
     objectives: formation.objectives.map((o) => o.text),
     content: formation.content.map((c) => c.text),
     workflow,

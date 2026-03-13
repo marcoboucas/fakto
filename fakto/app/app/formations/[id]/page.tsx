@@ -40,10 +40,10 @@ async function FormationDetailContent({ id }: { id: string }) {
                 {formation.description}
               </p>
               <p className="text-sm">
-                Cette formation express a pour objectif de fournir une compréhension claire et opérationnelle des obligations de lutte contre le blanchiment de capitaux et le financement du terrorisme (LCB-FT) applicables aux acteurs de l'assurance. En 1 heure, les participants sauront identifier les risques, appliquer les obligations de vigilance et sécuriser leurs pratiques pour répondre aux attentes des régulateurs.
+                Cette formation express a pour objectif de fournir une compréhension claire et opérationnelle des obligations de lutte contre le blanchiment de capitaux et le financement du terrorisme (LCB-FT) applicables aux acteurs de l&apos;assurance. En 1 heure, les participants sauront identifier les risques, appliquer les obligations de vigilance et sécuriser leurs pratiques pour répondre aux attentes des régulateurs.
               </p>
               <p className="text-sm font-medium">
-                À l'issue de la formation, le participant sera capable de mettre en œuvre les compétences suivantes :
+                À l&apos;issue de la formation, le participant sera capable de mettre en œuvre les compétences suivantes :
               </p>
               <ul className="space-y-2">
                 {formation.objectives.map((objective, index) => (
@@ -67,7 +67,7 @@ async function FormationDetailContent({ id }: { id: string }) {
                 {formation.description}
               </p>
               <p className="text-sm">
-                La formation couvre les fondamentaux de la LCB-FT adaptés au secteur assurantiel : typologie des risques, mesures de vigilance, analyse des opérations, détection des signaux d'alerte, obligations de déclaration et de gel des avoirs. Elle inclut également les attentes des autorités lors des contrôles et propose des exemples concrets de situations à risque.
+                La formation couvre les fondamentaux de la LCB-FT adaptés au secteur assurantiel : typologie des risques, mesures de vigilance, analyse des opérations, détection des signaux d&apos;alerte, obligations de déclaration et de gel des avoirs. Elle inclut également les attentes des autorités lors des contrôles et propose des exemples concrets de situations à risque.
               </p>
               <ul className="space-y-3">
                 {formation.content.map((item, index) => (
